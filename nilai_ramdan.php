@@ -115,6 +115,40 @@
             content: attr(data-front);
             transform: translateY(0) rotateX(0);
         }
+        .filter-box {
+            background: #f8f9fc;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            width: fit-content;
+            margin: 0 auto 20px auto;
+            font-size: 14px;
+        }
+        .filter-box label {
+            margin-right: 8px;
+            font-weight: 600;
+        }
+        .filter-box input,
+        .filter-box select {
+            padding: 6px 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-right: 15px;
+            font-size: 14px;
+        }
+        .filter-box button {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 4px;
+            background: #4e73df;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .filter-box button:hover {
+            background: #2e59d9;
+        }
     </style>
 </head>
 <body>
@@ -130,6 +164,20 @@
     <h2>Daftar Nilai</h2> <br>
 
     <a style="margin-left: 42%;" href="tambah_nilai_Ramdan.php" class="btn-flip" data-back="Meluncur"data-front="Tambah Data Nilai"></a>
+
+    <form method="GET" class="filter-box">
+        <label>Semester</label>
+        <select name="semester">
+            <option value="">Semua</option>
+            <option value="ganjil" <?php if (($_GET['semester'] ?? '') == 'ganjil') echo 'selected'; ?>>Ganjil</option>
+            <option value="genap" <?php if (($_GET['semester'] ?? '') == 'genap') echo 'selected'; ?>>Genap</option>
+        </select>
+
+        <label>Tahun Ajaran</label>
+        <input type="text" name="tahun" placeholder="2025/2026" value="<?php echo $_GET['tahun'] ?? ''; ?>">
+
+        <button type="submit">Filter</button>
+    </form>
 
     <table>
         <tr>
@@ -148,12 +196,27 @@
         </tr>
         <?php
         include "koneksi_ramdan.php";
-        $queryRamdan = mysqli_query($koneksi, "
+
+        $semester = $_GET['semester'] ?? '';
+        $tahun = $_GET['tahun'] ?? '';
+
+        $sql = "
     SELECT nilai_ramdan.*, siswa_ramdan.nama, mapel_ramdan.nama_mapel
     FROM nilai_ramdan
     JOIN siswa_ramdan ON nilai_ramdan.nis = siswa_ramdan.nis
     JOIN mapel_ramdan ON nilai_ramdan.id_mapel = mapel_ramdan.id_mapel
-");
+    WHERE 1=1
+";
+        if ($semester != '') {
+            $semester = mysqli_real_escape_string($koneksi, $semester);
+            $sql .= " AND nilai_ramdan.semester = '$semester'";
+        }
+        if ($tahun != '') {
+            $tahun = mysqli_real_escape_string($koneksi, $tahun);
+            $sql .= " AND nilai_ramdan.tahun_ajaran = '$tahun'";
+        }
+
+        $queryRamdan = mysqli_query($koneksi, $sql);
         if(mysqli_num_rows($queryRamdan) > 0){
         while ($data = mysqli_fetch_array($queryRamdan)) {
         ?>

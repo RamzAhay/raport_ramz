@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2026 at 05:01 AM
+-- Generation Time: Feb 04, 2026 at 04:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -114,7 +114,10 @@ CREATE TABLE `nilai_ramdan` (
 
 INSERT INTO `nilai_ramdan` (`id_nilai`, `nis`, `id_mapel`, `nilai_tugas`, `nilai_uts`, `nilai_uas`, `nilai_akhir`, `deskripsi`, `semester`, `tahun_ajaran`) VALUES
 ('NP001', 10243299, 1, 89, 89, 92, 90, 'Sangat Baik', 'ganjil', '2025-2026'),
-('NP002', 10243297, 2, 97, 69, 87, 85, 'Baik', 'ganjil', '2025/2026');
+('NP002', 10243297, 2, 97, 69, 87, 85, 'Baik', 'ganjil', '2025/2026'),
+('NP003', 10243299, 1, 98, 78, 96, 91, 'Sangat Baik', 'genap', '2025/2026'),
+('NP004', 10243299, 2, 89, 87, 89, 88, 'Sangat Baik', 'ganjil', '2025/2026'),
+('NP005', 10243299, 2, 97, 87, 86, 90, 'Sangat Baik', 'genap', '2025/2026');
 
 -- --------------------------------------------------------
 
